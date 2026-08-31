@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import Link from "next/link";
 import { Anchor, ShieldCheck, Sun, Zap, Fish, Globe2 } from "lucide-react";
 
@@ -10,20 +10,23 @@ export default function Footer() {
           {/* Col 1: Brand & Mission */}
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-teal to-ocean flex items-center justify-center shadow-lg">
-                <Anchor className="w-4 h-4 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-lg border border-teal/40">
+                <img
+                  src="/bluesync-logo.png"
+                  alt="Logo BlueSync"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <span className="font-extrabold text-xl tracking-tight text-white">
-                BlueSync<span className="text-teal">.</span>
+              <span className="font-black text-xl tracking-tight text-white">
+                BLUESYNC<span className="text-teal">.</span>
               </span>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
-              Digital operating platform untuk ekosistem micro cold storage solar-hybrid di wilayah pesisir Indonesia.
-              Menyelamatkan mutu tangkapan nelayan kecil dan memberdayakan BUMDes.
+              Inovasi Micro Cold Storage Tenaga Surya oleh Tim <strong>Universitas Airlangga</strong> untuk Ajang <em>UNISBA National Business Competition (Energy & Green Technology)</em>.
             </p>
-            <div className="flex items-center gap-2 text-[11px] text-teal">
+            <div className="flex items-center gap-2 text-[11px] text-teal-light font-mono font-semibold">
               <Sun className="w-4 h-4 text-amber-400" />
-              <span>100% Didukung Energi Surya Bersih</span>
+              <span>100% Energi Surya Bersih (Clean-Tech)</span>
             </div>
           </div>
 

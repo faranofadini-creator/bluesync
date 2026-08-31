@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -97,22 +97,26 @@ export default function Navbar() {
           {/* Brand Logo */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal to-ocean flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                <Anchor className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden border border-teal/40">
+                <img
+                  src="/bluesync-logo.png"
+                  alt="Logo BlueSync"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="flex flex-col">
-                <span className="font-extrabold text-xl tracking-tight text-white flex items-center gap-1">
-                  BlueSync<span className="text-teal text-2xl leading-none">.</span>
+                <span className="font-black text-xl tracking-tight text-white flex items-center gap-1">
+                  BLUESYNC<span className="text-teal text-2xl leading-none">.</span>
                 </span>
-                <span className="text-[9px] uppercase tracking-widest text-slate-300 -mt-1 font-semibold">
-                  Smart Cold Chain
+                <span className="text-[9px] uppercase tracking-widest text-teal-light -mt-1 font-semibold">
+                  Solar Cold Chain
                 </span>
               </div>
             </Link>
 
             <span className="hidden lg:inline-flex items-center gap-1 ml-2 bg-navy-800 border border-teal/40 text-teal-light px-2 py-0.5 rounded-full text-[10px] font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-teal animate-pulse" />
-              v2.0 Solar-Hybrid
+              UNAIR • Green Tech
             </span>
           </div>
 
