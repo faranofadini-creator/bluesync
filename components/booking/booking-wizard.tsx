@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,11 @@ import {
   Clock,
   Sparkles,
   Download,
+  Printer,
+  MessageSquare,
 } from "lucide-react";
+import PrintableVoucherModal from "./printable-voucher-modal";
+import WhatsAppModal from "../shared/whatsapp-modal";
 
 export default function BookingWizard() {
   const router = useRouter();
@@ -43,6 +47,8 @@ export default function BookingWizard() {
   const [notes, setNotes] = useState<string>("");
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [createdResult, setCreatedResult] = useState<any | null>(null);
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
 
   const selectedUnit = units.find((u) => u.id === selectedUnitId) || units[0];
   const selectedSpecies = species.find((s) => s.id === selectedSpeciesId) || species[0];
@@ -501,6 +507,25 @@ export default function BookingWizard() {
               </div>
             </div>
 
+            {/* Action Buttons: Print PDF, WhatsApp & Navigation */}
+            <div className="grid grid-cols-2 gap-2 pt-2">
+              <button
+                onClick={() => setIsPrintModalOpen(true)}
+                className="bg-navy hover:bg-navy-800 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <Printer className="w-4 h-4 text-teal" />
+                <span>Cetak / PDF Tiket</span>
+              </button>
+
+              <button
+                onClick={() => setIsWhatsAppModalOpen(true)}
+                className="bg-[#00a884] hover:bg-[#008f6f] text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>Kirim WhatsApp</span>
+              </button>
+            </div>
+
             <div className="flex gap-2">
               <button
                 onClick={() => router.push(`/trace/${createdResult.batch.batchCode}`)}
@@ -511,7 +536,7 @@ export default function BookingWizard() {
               </button>
               <button
                 onClick={() => router.push("/dashboard/inventory")}
-                className="flex-1 bg-navy hover:bg-navy-800 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm"
+                className="flex-1 bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition shadow-sm"
               >
                 <span>Daftar Ikan Saya</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -520,6 +545,53 @@ export default function BookingWizard() {
           </div>
         )}
       </div>
+
+      {/* Printable Voucher Modal */}
+      {createdResult && (
+        <PrintableVoucherModal
+          isOpen={isPrintModalOpen}
+          onClose={() => setIsPrintModalOpen(false)}
+          bookingData={{
+            bookingCode: createdResult.booking.bookingCode,
+            batchCode: createdResult.batch.batchCode,
+            fishermanName: createdResult.booking.fishermanName,
+            fishermanPhone: currentUser.phone,
+            unitName: createdResult.booking.unitName,
+            unitCode: selectedUnit.code,
+            locationName: selectedUnit.locationName,
+            fishSpeciesName: createdResult.booking.fishSpeciesName,
+            weightKg: createdResult.booking.weightKg,
+            startDate: createdResult.booking.startDate,
+            endDate: createdResult.booking.endDate,
+            durationDays: createdResult.booking.durationDays,
+            totalPrice: createdResult.booking.totalPrice,
+            paymentMethod: createdResult.booking.paymentMethod,
+            paymentStatus: createdResult.booking.paymentStatus,
+            createdAt: createdResult.booking.createdAt,
+          }}
+        />
+      )}
+
+      {/* WhatsApp Modal */}
+      {createdResult && (
+        <WhatsAppModal
+          isOpen={isWhatsAppModalOpen}
+          onClose={() => setIsWhatsAppModalOpen(false)}
+          bookingData={{
+            bookingCode: createdResult.booking.bookingCode,
+            batchCode: createdResult.batch.batchCode,
+            fishermanName: createdResult.booking.fishermanName,
+            fishermanPhone: currentUser.phone,
+            unitName: createdResult.booking.unitName,
+            locationName: selectedUnit.locationName,
+            fishSpeciesName: createdResult.booking.fishSpeciesName,
+            weightKg: createdResult.booking.weightKg,
+            startDate: createdResult.booking.startDate,
+            endDate: createdResult.booking.endDate,
+            totalPrice: createdResult.booking.totalPrice,
+          }}
+        />
+      )}
 
       {/* Footer Stepper Controls */}
       {currentStep < 7 && (

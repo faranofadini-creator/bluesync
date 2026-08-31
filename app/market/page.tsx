@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -14,10 +14,13 @@ import {
   ArrowRight,
   Sparkles,
 } from "lucide-react";
+import PpiRadiusMap, { PPI_LOCATIONS } from "@/components/market/ppi-radius-map";
 
 export default function MarketplacePage() {
   const { batches, species } = useBlueSyncStore();
   const [selectedSpecies, setSelectedSpecies] = useState<string>("all");
+  const [selectedPpiId, setSelectedPpiId] = useState<string>("all");
+  const [radiusKm, setRadiusKm] = useState<number>(0);
   const [search, setSearch] = useState("");
 
   const filtered = batches.filter((b) => {
@@ -26,11 +29,39 @@ export default function MarketplacePage() {
       b.fishSpeciesName.toLowerCase().includes(search.toLowerCase()) ||
       b.locationName.toLowerCase().includes(search.toLowerCase()) ||
       b.fishermanName.toLowerCase().includes(search.toLowerCase());
-    return matchSpecies && matchSearch;
+
+    // Location / PPI match
+    let matchPpi = true;
+    if (selectedPpiId !== "all") {
+      const ppi = PPI_LOCATIONS.find((p) => p.id === selectedPpiId);
+      if (ppi) {
+        const isDirectMatch =
+          b.locationName.toLowerCase().includes(ppi.district.toLowerCase()) ||
+          b.locationName.toLowerCase().includes(ppi.province.toLowerCase()) ||
+          b.locationName.toLowerCase().includes(ppi.name.replace("PPI ", "").toLowerCase());
+
+        if (radiusKm > 0) {
+          // In real application, haversine distance. Here mock radius expansion
+          matchPpi = isDirectMatch || radiusKm >= 50;
+        } else {
+          matchPpi = isDirectMatch;
+        }
+      }
+    }
+
+    return matchSpecies && matchSearch && matchPpi;
   });
 
   return (
     <div className="space-y-6">
+      {/* Interactive PPI Radius Map */}
+      <PpiRadiusMap
+        selectedPpiId={selectedPpiId}
+        onSelectPpi={setSelectedPpiId}
+        radiusKm={radiusKm}
+        onChangeRadius={setRadiusKm}
+      />
+
       {/* Search & Filter Bar */}
       <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import {
@@ -630,6 +630,19 @@ export function useBlueSyncStore() {
     });
   }, []);
 
+  const addNotification = useCallback((notif: Omit<Notification, "id" | "isRead" | "createdAt">) => {
+    const newNotif: Notification = {
+      ...notif,
+      id: `notif-${Date.now()}`,
+      isRead: false,
+      createdAt: new Date().toISOString(),
+    };
+    persistAndBroadcast({
+      ...globalData,
+      notifications: [newNotif, ...globalData.notifications],
+    });
+  }, []);
+
   const markNotificationRead = useCallback((notifId: string) => {
     const updated = globalData.notifications.map((n) => (n.id === notifId ? { ...n, isRead: true } : n));
     persistAndBroadcast({ ...globalData, notifications: updated });
@@ -657,6 +670,7 @@ export function useBlueSyncStore() {
     triggerSimulationTick,
     injectTemperatureAnomaly,
     resetSimulation,
+    addNotification,
     markNotificationRead,
     clearNotifications,
   };

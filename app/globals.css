@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -29,4 +29,82 @@ body {
 
 .animate-spin-slow {
   animation: spinSlow 12s linear infinite;
+}
+
+/* ==========================================================================
+   Operator Night Shift / Dark Cockpit Styles
+   ========================================================================== */
+.operator-dark-mode .bg-white {
+  background-color: #0f1d2e !important;
+  color: #f1f5f9 !important;
+  border-color: #1e324a !important;
+}
+
+.operator-dark-mode .bg-slate-50 {
+  background-color: #0c1826 !important;
+  color: #f1f5f9 !important;
+  border-color: #1a2c42 !important;
+}
+
+.operator-dark-mode .text-navy {
+  color: #f8fafc !important;
+}
+
+.operator-dark-mode .text-slate-900,
+.operator-dark-mode .text-slate-800,
+.operator-dark-mode .text-slate-700 {
+  color: #e2e8f0 !important;
+}
+
+.operator-dark-mode .text-slate-600,
+.operator-dark-mode .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+.operator-dark-mode .border-slate-200,
+.operator-dark-mode .border-slate-100 {
+  border-color: #1e324a !important;
+}
+
+.operator-dark-mode table thead tr {
+  background-color: #09131f !important;
+  color: #94a3b8 !important;
+}
+
+.operator-dark-mode table tbody tr {
+  border-color: #1a2c42 !important;
+}
+
+.operator-dark-mode table tbody tr:hover {
+  background-color: #16263b !important;
+}
+
+.operator-dark-mode input,
+.operator-dark-mode select,
+.operator-dark-mode textarea {
+  background-color: #09131f !important;
+  color: #f8fafc !important;
+  border-color: #243c5a !important;
+}
+
+/* ==========================================================================
+   Print Optimization for Vouchers
+   ========================================================================== */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-voucher, #printable-voucher * {
+    visibility: visible;
+  }
+  #printable-voucher {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: white !important;
+    color: black !important;
+  }
 }
