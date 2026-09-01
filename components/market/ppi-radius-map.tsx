@@ -15,6 +15,7 @@ import {
   Sun,
   Activity,
   Compass,
+  Sparkles,
 } from "lucide-react";
 import { useBlueSyncStore } from "@/lib/store/bluesync-store";
 
@@ -43,8 +44,8 @@ export const PPI_LOCATIONS: PpiLocation[] = [
     province: "DKI Jakarta",
     lat: -6.1084,
     lng: 106.8041,
-    xPct: 22.5,
-    yPct: 66,
+    xPct: 27.5,
+    yPct: 67.5,
     activeUnitsCount: 2,
     totalCapacityKg: 4000,
     currentLoadKg: 2850,
@@ -59,8 +60,8 @@ export const PPI_LOCATIONS: PpiLocation[] = [
     province: "Jawa Timur",
     lat: -8.4312,
     lng: 112.6845,
-    xPct: 35.5,
-    yPct: 76,
+    xPct: 39.5,
+    yPct: 77.0,
     activeUnitsCount: 1,
     totalCapacityKg: 2000,
     currentLoadKg: 1400,
@@ -75,8 +76,8 @@ export const PPI_LOCATIONS: PpiLocation[] = [
     province: "Jawa Timur",
     lat: -8.4333,
     lng: 114.3333,
-    xPct: 40.5,
-    yPct: 77,
+    xPct: 43.0,
+    yPct: 77.0,
     activeUnitsCount: 1,
     totalCapacityKg: 2000,
     currentLoadKg: 1650,
@@ -91,8 +92,8 @@ export const PPI_LOCATIONS: PpiLocation[] = [
     province: "Sulawesi Utara",
     lat: 1.4398,
     lng: 125.1872,
-    xPct: 62.5,
-    yPct: 31,
+    xPct: 64.5,
+    yPct: 31.0,
     activeUnitsCount: 2,
     totalCapacityKg: 5000,
     currentLoadKg: 3200,
@@ -107,8 +108,8 @@ export const PPI_LOCATIONS: PpiLocation[] = [
     province: "Maluku",
     lat: -5.7667,
     lng: 134.2167,
-    xPct: 79.5,
-    yPct: 67,
+    xPct: 82.5,
+    yPct: 67.0,
     activeUnitsCount: 1,
     totalCapacityKg: 2000,
     currentLoadKg: 850,
@@ -142,24 +143,25 @@ export default function PpiRadiusMap({
       <div className="bg-gradient-to-r from-[#081524] via-[#091d33] to-[#0d2e4a] text-white p-4 sm:p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-800">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono font-bold uppercase bg-teal text-navy px-2 py-0.5 rounded">
-              GEOLOCATION RADAR
+            <span className="text-[10px] font-mono font-bold uppercase bg-teal text-navy px-2.5 py-0.5 rounded-full flex items-center gap-1">
+              <Radio className="w-3 h-3 text-navy animate-pulse" />
+              GEOLOCATION RADAR NUSANTARA
             </span>
-            <span className="text-xs text-teal-light flex items-center gap-1 font-mono">
-              <Radio className="w-3.5 h-3.5 animate-pulse text-green-400" />
-              5 Titik PPI Terhubung IoT Real-Time
+            <span className="text-xs text-teal-light font-mono hidden sm:inline">
+              Peta Sebaran Real-Time 5 Pangkalan Pendaratan Ikan (PPI)
             </span>
           </div>
-          <h2 className="text-base sm:text-lg font-bold text-white mt-1">
-            Peta Sebaran Micro Cold Storage & Filter Radius PPI
+          <h2 className="text-lg sm:text-xl font-extrabold text-white mt-1">
+            Peta Jaringan Cold Storage Pesisir &amp; Filter Radius Distribusi
           </h2>
         </div>
 
         <button
           onClick={() => setIsMapExpanded(!isMapExpanded)}
-          className="text-xs font-semibold text-slate-300 hover:text-white bg-slate-900/80 px-3 py-1.5 rounded-xl border border-slate-700 transition"
+          className="text-xs font-semibold text-slate-300 hover:text-white bg-slate-900/90 px-3.5 py-1.5 rounded-xl border border-slate-700 transition flex items-center gap-1.5"
         >
-          {isMapExpanded ? "Sembunyikan Peta" : "Buka Radar Nusantara"}
+          <Compass className="w-3.5 h-3.5 text-teal" />
+          <span>{isMapExpanded ? "Sembunyikan Peta" : "Tampilkan Peta Radar"}</span>
         </button>
       </div>
 
@@ -176,9 +178,9 @@ export default function PpiRadiusMap({
               <select
                 value={selectedPpiId}
                 onChange={(e) => onSelectPpi(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs font-semibold text-navy focus:outline-none focus:border-teal"
+                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs font-semibold text-navy focus:outline-none focus:border-teal shadow-sm"
               >
-                <option value="all">🌍 Semua Wilayah Pesisir Indonesia</option>
+                <option value="all">🌍 Semua Wilayah Pesisir Indonesia (5 Titik Terkoneksi)</option>
                 {PPI_LOCATIONS.map((loc) => (
                   <option key={loc.id} value={loc.id}>
                     {loc.name} ({loc.district}, {loc.province})
@@ -194,7 +196,7 @@ export default function PpiRadiusMap({
                   <Navigation className="w-3.5 h-3.5 text-teal" />
                   <span>Jangkauan Radius Distribusi:</span>
                 </label>
-                <span className="text-xs font-bold font-mono text-teal bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+                <span className="text-xs font-bold font-mono text-teal bg-teal-50 px-2.5 py-0.5 rounded-lg border border-teal-200">
                   {radiusKm === 0 ? "Tanpa Batas Radius" : `± ${radiusKm} KM`}
                 </span>
               </div>
@@ -210,7 +212,7 @@ export default function PpiRadiusMap({
                 />
               </div>
               <div className="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
-                <span>Semua</span>
+                <span>Semua Titik</span>
                 <span>25 km</span>
                 <span>50 km</span>
                 <span>100 km</span>
@@ -218,147 +220,181 @@ export default function PpiRadiusMap({
             </div>
           </div>
 
-          {/* High-Fidelity Indonesian Archipelago Radar Canvas */}
-          <div className="relative bg-gradient-to-b from-[#040b14] via-[#061220] to-[#07182b] rounded-2xl border border-slate-800 p-4 overflow-hidden min-h-[300px] flex items-center justify-center shadow-inner">
+          {/* High-Fidelity Indonesian Archipelago Vector Radar Canvas */}
+          <div className="relative bg-gradient-to-b from-[#040c17] via-[#061424] to-[#071c33] rounded-2xl border border-teal/40 p-4 overflow-hidden min-h-[320px] flex items-center justify-center shadow-inner">
             {/* Radar Coordinates & Sonar Sweep Grid */}
             <div
-              className="absolute inset-0 opacity-15"
+              className="absolute inset-0 opacity-15 pointer-events-none"
               style={{
                 backgroundImage: `linear-gradient(#0D9488 1px, transparent 1px), linear-gradient(90deg, #0D9488 1px, transparent 1px)`,
                 backgroundSize: `28px 28px`,
               }}
             />
 
-            {/* Radar Compass & Coordinates Title */}
-            <div className="absolute top-3 left-3 text-[10px] font-mono text-teal-300 bg-slate-950/80 px-2.5 py-1 rounded-lg border border-teal-800/40 flex items-center gap-1.5 shadow-sm">
-              <Compass className="w-3 h-3 text-teal animate-spin" style={{ animationDuration: "12s" }} />
-              <span>INDONESIA MARITIME COLD-CHAIN TELEMETRY • WGS84</span>
+            {/* HUD Status Header */}
+            <div className="absolute top-3 left-3 text-[10px] font-mono text-teal-300 bg-slate-950/90 px-3 py-1 rounded-lg border border-teal-800/60 flex items-center gap-2 shadow-md z-10">
+              <Compass className="w-3.5 h-3.5 text-teal animate-spin-slow" />
+              <span>INDONESIA MARITIME COLD-CHAIN TELEMETRY GRID • WGS84</span>
             </div>
 
-            <div className="absolute top-3 right-3 text-[10px] font-mono text-slate-400 bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800">
-              Coverage: 6°N - 11°S • 95°E - 141°E
+            <div className="absolute top-3 right-3 text-[10px] font-mono text-slate-400 bg-slate-950/80 px-2.5 py-1 rounded border border-slate-800 z-10 hidden sm:block">
+              Coordinates: 6°N - 11°S • 95°E - 141°E
             </div>
 
             {/* SVG Interactive Map Canvas */}
-            <div className="relative w-full max-w-4xl h-64 sm:h-80 flex items-center justify-center">
-              <svg viewBox="0 0 1000 480" className="w-full h-full">
+            <div className="relative w-full max-w-4xl h-72 sm:h-84 flex items-center justify-center">
+              <svg viewBox="0 0 1000 460" className="w-full h-full">
                 <defs>
                   {/* Island Land Gradient */}
-                  <linearGradient id="islandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#134e4a" />
-                    <stop offset="100%" stopColor="#0f2f3d" />
+                  <linearGradient id="islandLandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#0f4c5c" />
+                    <stop offset="50%" stopColor="#0d3b48" />
+                    <stop offset="100%" stopColor="#092731" />
                   </linearGradient>
-                  {/* Selected Island Highlight */}
-                  <linearGradient id="islandSelected" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#0D9488" />
-                    <stop offset="100%" stopColor="#115e59" />
+                  <linearGradient id="islandStrokeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#14b8a6" />
+                    <stop offset="50%" stopColor="#38bdf8" />
+                    <stop offset="100%" stopColor="#14b8a6" />
                   </linearGradient>
-                  {/* Radar Pulse Filter */}
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                    <feMerge>
-                      <feMergeNode in="coloredBlur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
                 </defs>
 
-                {/* Ocean Depth Curves (Bathymetric lines) */}
-                <path
-                  d="M50,150 Q250,180 500,160 T950,220"
-                  fill="none"
-                  stroke="#0D9488"
-                  strokeWidth="0.5"
-                  strokeDasharray="4 4"
-                  opacity="0.25"
-                />
-                <path
-                  d="M50,320 Q300,280 600,340 T950,300"
-                  fill="none"
-                  stroke="#0D9488"
-                  strokeWidth="0.5"
-                  strokeDasharray="4 4"
-                  opacity="0.25"
-                />
+                {/* Ocean Depth Bathymetric Contour Lines */}
+                <g stroke="#0D9488" strokeWidth="0.75" strokeDasharray="5 5" opacity="0.2">
+                  <path d="M40,120 Q200,160 400,140 T800,180 T980,240" fill="none" />
+                  <path d="M40,260 Q250,220 500,280 T850,240 T980,310" fill="none" />
+                  <path d="M40,360 Q300,320 600,380 T980,360" fill="none" />
+                </g>
 
-                {/* 1. SUMATRA */}
-                <path
-                  d="M75,105 C85,90 100,75 110,85 C130,110 150,140 185,175 C215,205 240,240 265,280 C270,295 260,305 245,300 C220,290 195,250 165,210 C135,170 105,140 85,120 Z"
-                  fill="url(#islandGrad)"
-                  stroke="#14b8a6"
-                  strokeWidth="1"
-                  opacity="0.85"
-                />
-                {/* Nias & Mentawai */}
-                <ellipse cx="95" cy="180" rx="6" ry="16" transform="rotate(-30 95 180)" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.5" />
-                <ellipse cx="145" cy="245" rx="5" ry="18" transform="rotate(-30 145 245)" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.5" />
-                <ellipse cx="175" cy="285" rx="5" ry="14" transform="rotate(-30 175 285)" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.5" />
+                {/* ========================================================
+                    ACCURATE INDONESIAN ARCHIPELAGO VECTOR MAP
+                    ======================================================== */}
 
-                {/* Bangka & Belitung */}
-                <ellipse cx="260" cy="225" rx="10" ry="18" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
-                <ellipse cx="295" cy="240" rx="9" ry="9" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
+                {/* 1. SUMATRA & OFFSHORE ISLANDS */}
+                <g>
+                  {/* Main Sumatra Island */}
+                  <path
+                    d="M60,65 C72,50 88,40 100,50 C120,68 140,88 165,115 C190,140 215,170 235,195 C255,220 270,245 285,270 C295,290 288,300 270,295 C240,285 210,250 180,210 C150,170 120,135 95,105 C80,90 65,78 60,65 Z"
+                    fill="url(#islandLandGrad)"
+                    stroke="url(#islandStrokeGrad)"
+                    strokeWidth="1.2"
+                  />
+                  {/* Nias Island */}
+                  <path d="M80,140 C85,130 92,135 88,155 C84,170 78,165 80,140 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                  {/* Mentawai (Siberut & Sipora) */}
+                  <path d="M118,205 C124,195 130,200 125,225 C120,240 115,230 118,205 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                  <path d="M145,250 C150,242 155,245 150,265 C145,275 140,270 145,250 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                  {/* Bangka */}
+                  <path d="M265,190 C280,175 292,185 285,210 C278,225 262,215 265,190 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.9" />
+                  {/* Belitung */}
+                  <path d="M310,205 C325,198 335,210 325,225 C315,232 305,220 310,205 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.9" />
+                  {/* Riau Archipelago */}
+                  <ellipse cx="220" cy="130" rx="8" ry="6" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.6" />
+                </g>
 
-                {/* 2. JAWA */}
-                <path
-                  d="M210,315 C240,310 270,312 300,318 C330,325 360,322 390,328 C415,332 445,338 455,348 C440,358 400,355 360,350 C320,345 270,340 225,335 C210,332 205,320 210,315 Z"
-                  fill="url(#islandGrad)"
-                  stroke="#14b8a6"
-                  strokeWidth="1"
-                  opacity="0.9"
-                />
-                {/* Madura */}
-                <path d="M380,315 C395,310 415,312 425,318 C415,324 395,324 380,315 Z" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
+                {/* 2. JAWA & MADURA */}
+                <g>
+                  {/* Main Java Island */}
+                  <path
+                    d="M235,305 C265,298 300,300 335,308 C370,314 405,310 440,316 C470,320 500,328 515,338 C495,348 450,345 405,340 C360,336 310,332 260,328 C240,324 230,312 235,305 Z"
+                    fill="url(#islandLandGrad)"
+                    stroke="url(#islandStrokeGrad)"
+                    strokeWidth="1.3"
+                  />
+                  {/* Ujung Kulon / Banten */}
+                  <path d="M225,312 C230,308 238,310 235,318 C230,322 224,318 225,312 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                  {/* Madura Island */}
+                  <path d="M430,302 C450,296 470,300 480,306 C468,312 445,312 430,302 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="1" />
+                </g>
 
-                {/* 3. BALI, LOMBOK, SUMBAWA, FLORES, TIMOR (Nusa Tenggara) */}
-                <path d="M465,348 C472,348 478,352 472,356 C465,356 460,352 465,348 Z" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
-                <path d="M485,348 C495,348 502,354 492,357 C485,356 480,352 485,348 Z" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
-                <path d="M510,346 C530,345 545,354 535,358 C515,358 505,352 510,346 Z" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
-                <path d="M560,346 C590,346 610,352 605,358 C580,358 555,354 560,346 Z" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
-                <path d="M625,355 C650,350 670,360 655,372 C635,372 620,365 625,355 Z" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
+                {/* 3. BALI, LOMBOK, SUMBAWA, FLORES, SUMBA, TIMOR */}
+                <g>
+                  {/* Bali */}
+                  <path d="M520,338 C530,336 538,340 532,346 C524,346 518,342 520,338 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.9" />
+                  {/* Lombok */}
+                  <path d="M545,338 C555,336 562,342 554,348 C546,346 542,342 545,338 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.9" />
+                  {/* Sumbawa */}
+                  <path d="M570,336 C595,332 615,340 605,348 C585,348 575,342 570,336 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.9" />
+                  {/* Flores */}
+                  <path d="M625,334 C655,332 680,336 690,344 C675,348 645,346 625,344 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.9" />
+                  {/* Sumba */}
+                  <path d="M610,365 C635,360 655,368 645,376 C625,376 612,372 610,365 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.9" />
+                  {/* Timor */}
+                  <path d="M695,355 C725,342 755,355 745,370 C720,375 700,368 695,355 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="1" />
+                </g>
 
-                {/* 4. KALIMANTAN */}
-                <path
-                  d="M310,130 C335,110 380,95 410,105 C440,115 450,140 455,170 C460,200 445,230 425,245 C400,260 360,260 330,245 C305,230 295,190 300,160 Z"
-                  fill="url(#islandGrad)"
-                  stroke="#14b8a6"
-                  strokeWidth="1"
-                  opacity="0.85"
-                />
+                {/* 4. KALIMANTAN (BORNEO) */}
+                <g>
+                  <path
+                    d="M310,120 C340,90 395,75 435,88 C468,98 480,125 488,155 C495,188 478,220 455,238 C425,255 380,252 345,236 C318,220 300,180 305,148 Z"
+                    fill="url(#islandLandGrad)"
+                    stroke="url(#islandStrokeGrad)"
+                    strokeWidth="1.3"
+                  />
+                  {/* Tarakan / Nunukan */}
+                  <ellipse cx="490" cy="98" rx="8" ry="6" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.6" />
+                </g>
 
-                {/* 5. SULAWESI (Distinctive K-Shape) */}
-                <path
-                  d="M540,140 C565,130 610,125 635,135 C640,145 615,155 580,158 C570,175 585,200 620,205 C625,215 595,225 565,215 C560,230 580,260 605,285 C595,295 570,285 555,250 C545,260 540,290 530,300 C520,300 525,270 535,235 C525,200 525,160 540,140 Z"
-                  fill="url(#islandGrad)"
-                  stroke="#14b8a6"
-                  strokeWidth="1"
-                  opacity="0.9"
-                />
+                {/* 5. SULAWESI (Distinctive 4-Armed K-Shape) */}
+                <g>
+                  <path
+                    d="M555,130 C585,118 630,112 655,122 C660,132 640,140 600,144 C585,160 605,185 640,190 C645,200 615,208 585,198 C580,215 605,245 628,272 C618,280 592,270 575,238 C562,250 555,280 545,292 C535,290 538,260 550,225 C538,190 538,150 555,130 Z"
+                    fill="url(#islandLandGrad)"
+                    stroke="url(#islandStrokeGrad)"
+                    strokeWidth="1.3"
+                  />
+                  {/* Buton & Muna */}
+                  <ellipse cx="620" cy="295" rx="10" ry="16" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                  {/* Sangihe & Talaud (North) */}
+                  <ellipse cx="658" cy="85" rx="5" ry="8" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.6" />
+                </g>
 
-                {/* 6. MALUKU & HALMAHERA */}
-                <path d="M670,140 C685,130 700,145 690,165 C685,185 700,200 685,210 C675,190 675,160 670,140 Z" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.8" />
-                <path d="M660,240 C690,235 710,245 700,255 C675,258 655,250 660,240 Z" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.8" />
-                <ellipse cx="680" cy="275" rx="14" ry="7" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.7" />
-                {/* Aru Islands (Dobo) */}
-                <ellipse cx="795" cy="320" rx="14" ry="22" fill="#134e4a" stroke="#14b8a6" strokeWidth="0.9" />
+                {/* 6. MALUKU ARCHIPELAGO */}
+                <g>
+                  {/* Halmahera */}
+                  <path
+                    d="M675,105 C695,95 710,110 700,130 C695,150 710,165 695,178 C682,158 680,128 675,105 Z"
+                    fill="url(#islandLandGrad)"
+                    stroke="#14b8a6"
+                    strokeWidth="0.9"
+                  />
+                  {/* Morotai */}
+                  <path d="M698,75 C708,70 715,78 708,90 C700,92 695,84 698,75 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.7" />
+                  {/* Buru */}
+                  <path d="M665,225 C685,218 700,228 690,242 C675,246 660,238 665,225 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                  {/* Seram */}
+                  <path d="M705,220 C745,215 770,225 760,238 C725,242 700,232 705,220 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.9" />
+                  {/* Ambon */}
+                  <ellipse cx="720" cy="248" rx="6" ry="4" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.7" />
+                  {/* Kai Islands */}
+                  <ellipse cx="788" cy="298" rx="8" ry="12" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                  {/* Kepulauan Aru (Dobo Hub) */}
+                  <path d="M818,295 C832,285 842,300 835,325 C824,335 812,320 818,295 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="1" />
+                </g>
 
-                {/* 7. PAPUA (Bird's Head & Main Island) */}
-                <path
-                  d="M740,215 C770,205 785,220 770,235 C755,245 770,260 805,255 C845,250 890,260 935,270 C945,300 920,335 885,355 C845,375 805,340 780,310 C765,285 735,250 740,215 Z"
-                  fill="url(#islandGrad)"
-                  stroke="#14b8a6"
-                  strokeWidth="1"
-                  opacity="0.9"
-                />
+                {/* 7. PAPUA (BIRD'S HEAD & MAINLAND) */}
+                <g>
+                  {/* Papua Mainland & Bird's Head */}
+                  <path
+                    d="M735,175 C765,160 782,175 765,195 C750,205 765,220 798,215 C835,210 875,218 920,228 C930,255 905,290 870,310 C830,330 790,298 770,270 C755,245 728,210 735,175 Z"
+                    fill="url(#islandLandGrad)"
+                    stroke="url(#islandStrokeGrad)"
+                    strokeWidth="1.4"
+                  />
+                  {/* Biak */}
+                  <path d="M805,170 C820,165 830,172 822,182 C810,185 802,178 805,170 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                  {/* Yapen */}
+                  <path d="M815,190 C835,185 850,192 840,198 C825,200 812,196 815,190 Z" fill="url(#islandLandGrad)" stroke="#14b8a6" strokeWidth="0.8" />
+                </g>
 
-                {/* Dynamic Radius Circles around selected PPI */}
+                {/* Dynamic Radius Pulse Circles around Selected PPI */}
                 {selectedPpiId !== "all" && activePpi && radiusKm > 0 && (
                   <g>
                     <circle
                       cx={`${activePpi.xPct}%`}
                       cy={`${activePpi.yPct}%`}
-                      r={radiusKm * 1.6}
+                      r={radiusKm * 1.5}
                       fill="#0D9488"
-                      fillOpacity="0.12"
+                      fillOpacity="0.15"
                       stroke="#14b8a6"
                       strokeWidth="1.5"
                       strokeDasharray="6 3"
@@ -366,7 +402,7 @@ export default function PpiRadiusMap({
                     <circle
                       cx={`${activePpi.xPct}%`}
                       cy={`${activePpi.yPct}%`}
-                      r={radiusKm * 0.8}
+                      r={radiusKm * 0.75}
                       fill="#0D9488"
                       fillOpacity="0.08"
                       stroke="#14b8a6"
@@ -376,7 +412,7 @@ export default function PpiRadiusMap({
                 )}
               </svg>
 
-              {/* Render Interactive Radar Pins */}
+              {/* Render Interactive Radar Pins on Geographic Positions */}
               {PPI_LOCATIONS.map((loc) => {
                 const isSelected = selectedPpiId === loc.id;
                 const isMatchedByRadius =
@@ -401,12 +437,12 @@ export default function PpiRadiusMap({
 
                     {/* Radar Pin Icon */}
                     <div
-                      className={`relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center shadow-lg transition-transform ${
+                      className={`relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center shadow-2xl transition-all ${
                         isSelected
-                          ? "bg-teal text-navy ring-4 ring-teal/50 scale-125 z-30 font-bold"
+                          ? "bg-teal text-navy ring-4 ring-teal/50 scale-125 z-30 font-bold shadow-teal/50"
                           : isMatchedByRadius
-                          ? "bg-[#0c314d] hover:bg-teal text-teal-light hover:text-navy hover:scale-110 ring-2 ring-teal/40"
-                          : "bg-slate-800 text-slate-400 opacity-60"
+                          ? "bg-[#09263e] hover:bg-teal text-teal-light hover:text-navy hover:scale-110 ring-2 ring-teal/40"
+                          : "bg-slate-800 text-slate-500 opacity-60"
                       }`}
                     >
                       <MapPin className="w-4 h-4" />
@@ -414,15 +450,15 @@ export default function PpiRadiusMap({
 
                     {/* Pin Label Tag */}
                     <div
-                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 whitespace-nowrap px-2 py-0.5 rounded text-[10px] font-mono font-bold transition pointer-events-none ${
+                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-1.5 whitespace-nowrap px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold transition shadow-xl pointer-events-none ${
                         isSelected
-                          ? "bg-teal text-navy shadow-md opacity-100 z-30"
-                          : "bg-slate-900/90 text-slate-300 border border-slate-700 opacity-0 group-hover:opacity-100 z-20"
+                          ? "bg-teal text-navy opacity-100 z-30"
+                          : "bg-slate-900/95 text-slate-200 border border-slate-700 opacity-0 group-hover:opacity-100 z-20"
                       }`}
                     >
-                      <span>{loc.name}</span>
+                      <span className="block">{loc.name}</span>
                       <span className="text-[9px] block text-teal-300 font-normal">
-                        {loc.avgTempC}°C • {loc.totalCapacityKg - loc.currentLoadKg}kg sisa
+                        {loc.avgTempC}°C • {loc.totalCapacityKg - loc.currentLoadKg} kg sisa
                       </span>
                     </div>
                   </div>
@@ -431,30 +467,38 @@ export default function PpiRadiusMap({
             </div>
           </div>
 
-          {/* Quick Active PPI Specs Bar */}
+          {/* Active PPI Details Bar */}
           {selectedPpiId !== "all" && activePpi && (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-teal-50/70 p-4 rounded-2xl border border-teal-100 text-xs animate-in fade-in">
               <div>
                 <span className="text-slate-500 text-[10px] block">Pangkalan Ikan (PPI):</span>
-                <strong className="text-navy">{activePpi.name}</strong>
+                <strong className="text-navy font-bold text-xs">{activePpi.name}</strong>
                 <span className="text-[10px] text-slate-500 block">{activePpi.province}</span>
               </div>
               <div>
-                <span className="text-slate-500 text-[10px] block">Kapasitas Tersedia:</span>
-                <strong className="font-mono text-teal">
+                <span className="text-slate-500 text-[10px] block">Kapasitas Cold Storage:</span>
+                <strong className="font-mono text-teal font-bold text-xs">
                   {activePpi.totalCapacityKg - activePpi.currentLoadKg} / {activePpi.totalCapacityKg} kg
                 </strong>
-                <span className="text-[10px] text-slate-500 block">Tingkat Isi: {((activePpi.currentLoadKg / activePpi.totalCapacityKg) * 100).toFixed(0)}%</span>
+                <span className="text-[10px] text-slate-500 block">
+                  Tingkat Keterisian: {((activePpi.currentLoadKg / activePpi.totalCapacityKg) * 100).toFixed(0)}%
+                </span>
               </div>
               <div>
-                <span className="text-slate-500 text-[10px] block">Suhu & Tenaga Surya:</span>
-                <strong className="font-mono text-green-700">{activePpi.avgTempC}°C (Deep Freeze)</strong>
-                <span className="text-[10px] text-amber-700 font-mono block">☀️ {activePpi.solarKw} kW Peak</span>
+                <span className="text-slate-500 text-[10px] block">Suhu &amp; Tenaga Surya:</span>
+                <strong className="font-mono text-green-700 font-bold text-xs">
+                  {activePpi.avgTempC}°C (Deep Freeze)
+                </strong>
+                <span className="text-[10px] text-amber-700 font-mono block font-semibold">
+                  ☀️ {activePpi.solarKw} kW Peak
+                </span>
               </div>
               <div>
                 <span className="text-slate-500 text-[10px] block">Spesies Utama Tersedia:</span>
-                <strong className="text-navy truncate block">{activePpi.species.join(", ")}</strong>
-                <span className="text-[10px] text-teal font-semibold block">Grade A Ekspor</span>
+                <strong className="text-navy truncate block font-bold text-xs">
+                  {activePpi.species.join(", ")}
+                </strong>
+                <span className="text-[10px] text-teal font-semibold block">Grade A Ekspor Terverifikasi</span>
               </div>
             </div>
           )}
