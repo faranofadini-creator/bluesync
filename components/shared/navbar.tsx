@@ -5,20 +5,15 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useBlueSyncStore } from "@/lib/store/bluesync-store";
 import {
-  Anchor,
   Bell,
-  User as UserIcon,
+  LayoutDashboard,
   LogOut,
   ChevronDown,
   Menu,
   X,
-  Shield,
-  LayoutDashboard,
-  Store,
-  Compass,
-  FileText,
-  Activity,
+  Sparkles,
   CheckCircle2,
+  AlertTriangle,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -35,12 +30,12 @@ export default function Navbar() {
 
   const publicLinks = [
     { href: "/", label: "Beranda" },
-    { href: "/solution", label: "Solusi" },
-    { href: "/technology", label: "Teknologi" },
-    { href: "/how-it-works", label: "Cara Kerja" },
-    { href: "/impact", label: "Dampak & SDGs" },
-    { href: "/business", label: "Model Bisnis" },
-    { href: "/partners", label: "Kemitraan" },
+    { href: "/#masalah", label: "Tantangan" },
+    { href: "/#solusi", label: "Solusi" },
+    { href: "/#workflow", label: "Alur Kerja" },
+    { href: "/#finansial", label: "Spesifikasi & Bisnis" },
+    { href: "/#kemitraan", label: "Kemitraan" },
+    { href: "/market", label: "Pasar Ikan" },
   ];
 
   const getDashboardHref = () => {
@@ -65,39 +60,24 @@ export default function Navbar() {
       case "fisherman":
         return "Nelayan";
       case "operator":
-        return "Operator BUMDes";
+        return "Operator";
       case "buyer":
-        return "Buyer Ikan";
+        return "Buyer";
       case "gov":
-        return "Pemerintah / CSR";
+        return "Pemerintah";
       case "admin":
-        return "Admin Global";
-    }
-  };
-
-  const getRoleColor = () => {
-    switch (currentUser.role) {
-      case "fisherman":
-        return "bg-teal text-white";
-      case "operator":
-        return "bg-ocean text-white";
-      case "buyer":
-        return "bg-orange text-white";
-      case "gov":
-        return "bg-green text-white";
-      case "admin":
-        return "bg-purple-700 text-white";
+        return "Admin";
     }
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-navy text-white shadow-md border-b border-navy-800">
+    <header className="sticky top-0 z-40 bg-[#081524]/90 backdrop-blur-md text-white border-b border-slate-800/80 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Brand Logo */}
+        <div className="flex justify-between items-center h-14">
+          {/* Brand Logo - Slim & Minimalist */}
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden border border-teal/40">
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform bg-white/10 border border-white/20">
                 <img
                   src="/bluesync-logo.png"
                   alt="Logo BlueSync"
@@ -105,31 +85,27 @@ export default function Navbar() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-black text-xl tracking-tight text-white flex items-center gap-1">
-                  BLUESYNC<span className="text-teal text-2xl leading-none">.</span>
+                <span className="font-bold text-base tracking-tight text-white flex items-center">
+                  BLUESYNC
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal ml-0.5 inline-block" />
                 </span>
-                <span className="text-[9px] uppercase tracking-widest text-teal-light -mt-1 font-semibold">
+                <span className="text-[8px] uppercase tracking-widest text-teal-light -mt-1 font-mono font-medium">
                   Solar Cold Chain
                 </span>
               </div>
             </Link>
-
-            <span className="hidden lg:inline-flex items-center gap-1 ml-2 bg-navy-800 border border-teal/40 text-teal-light px-2 py-0.5 rounded-full text-[10px] font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-teal animate-pulse" />
-              UNAIR • Green Tech
-            </span>
           </div>
 
-          {/* Desktop Public Navigation */}
-          <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+          {/* Desktop Public Navigation - Slim Pills */}
+          <nav className="hidden lg:flex items-center space-x-1">
             {publicLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${
+                className={`px-3 py-1 rounded-md text-xs font-medium transition ${
                   pathname === link.href
-                    ? "bg-navy-800 text-teal-light font-bold"
-                    : "text-slate-300 hover:text-white hover:bg-navy-800/60"
+                    ? "text-teal-light font-semibold bg-white/5"
+                    : "text-slate-300 hover:text-white hover:bg-white/5"
                 }`}
               >
                 {link.label}
@@ -137,12 +113,12 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right Actions: Quick Dashboard, Notifications, Persona Switcher */}
-          <div className="flex items-center gap-2.5">
+          {/* Right Actions: Slim Role Portal, Notification Bell & User Switcher */}
+          <div className="flex items-center gap-2">
             {/* Quick Link to Current Role Dashboard */}
             <Link
               href={getDashboardHref()}
-              className="hidden sm:flex items-center gap-1.5 bg-teal hover:bg-teal-dark text-white px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-sm"
+              className="hidden sm:flex items-center gap-1.5 bg-teal/90 hover:bg-teal text-white px-3 py-1 rounded-lg text-xs font-semibold transition shadow-sm"
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
               <span>Portal {getRoleLabel()}</span>
@@ -152,12 +128,12 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setNotifOpen(!notifOpen)}
-                className="relative p-2 rounded-lg text-slate-300 hover:text-white hover:bg-navy-800 transition"
+                className="relative p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition"
                 aria-label="Notifikasi"
               >
-                <Bell className="w-5 h-5" />
+                <Bell className="w-4 h-4" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 w-4 h-4 bg-red rounded-full text-[10px] font-black flex items-center justify-center text-white ring-2 ring-navy animate-pulse">
+                  <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full text-[9px] font-bold flex items-center justify-center text-white ring-2 ring-slate-900 animate-pulse">
                     {unreadCount}
                   </span>
                 )}
@@ -166,15 +142,15 @@ export default function Navbar() {
               {/* Notification Drawer Dropdown */}
               {notifOpen && (
                 <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-in fade-in">
-                  <div className="bg-navy text-white px-4 py-3 flex items-center justify-between">
+                  <div className="bg-[#081524] text-white px-4 py-2.5 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Bell className="w-4 h-4 text-teal" />
-                      <span className="font-bold text-xs">Pusat Notifikasi & Smart Alert</span>
+                      <Bell className="w-3.5 h-3.5 text-teal" />
+                      <span className="font-bold text-xs">Pusat Notifikasi & Telemetri</span>
                     </div>
                     {notifications.length > 0 && (
                       <button
                         onClick={clearNotifications}
-                        className="text-[10px] text-slate-300 hover:text-white underline"
+                        className="text-[10px] text-slate-400 hover:text-white underline"
                       >
                         Bersihkan
                       </button>
@@ -183,43 +159,40 @@ export default function Navbar() {
 
                   <div className="max-h-80 overflow-y-auto divide-y divide-slate-100">
                     {notifications.length === 0 ? (
-                      <div className="p-6 text-center text-slate-400 text-xs">
-                        Tidak ada notifikasi baru
+                      <div className="p-6 text-center text-xs text-slate-400">
+                        Tidak ada notifikasi baru. Sistem beroperasi normal.
                       </div>
                     ) : (
-                      notifications.map((notif) => (
+                      notifications.slice(0, 8).map((notif) => (
                         <div
                           key={notif.id}
                           onClick={() => markNotificationRead(notif.id)}
-                          className={`p-3 text-xs transition cursor-pointer hover:bg-slate-50 ${
+                          className={`p-3.5 hover:bg-slate-50 transition cursor-pointer text-xs space-y-1 ${
                             !notif.isRead ? "bg-teal-50/50" : ""
                           }`}
                         >
-                          <div className="flex items-start justify-between gap-2">
+                          <div className="flex justify-between items-start">
                             <span
-                              className={`font-bold ${
+                              className={`font-semibold ${
                                 notif.severity === "critical"
-                                  ? "text-red"
+                                  ? "text-red-600"
                                   : notif.severity === "warning"
-                                  ? "text-yellow-700"
+                                  ? "text-amber-600"
                                   : "text-navy"
                               }`}
                             >
                               {notif.title}
                             </span>
-                            {!notif.isRead && (
-                              <span className="w-2 h-2 rounded-full bg-teal shrink-0 mt-1" />
-                            )}
+                            <span className="text-[10px] text-slate-400 font-mono">
+                              {new Date(notif.createdAt).toLocaleTimeString("id-ID", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
+                            </span>
                           </div>
-                          <p className="text-slate-600 mt-1 text-[11px] leading-relaxed">
+                          <p className="text-[11px] text-slate-600 leading-relaxed">
                             {notif.body}
                           </p>
-                          <div className="text-[9px] text-slate-400 mt-1 font-mono">
-                            {new Date(notif.createdAt).toLocaleTimeString("id-ID", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </div>
                         </div>
                       ))
                     )}
@@ -232,149 +205,103 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-navy-800 transition border border-navy-700"
+                className="flex items-center gap-1.5 p-1 sm:px-2 rounded-lg hover:bg-white/5 transition text-left border border-white/10"
               >
                 <img
                   src={currentUser.avatarUrl}
                   alt={currentUser.fullName}
-                  className="w-7 h-7 rounded-lg object-cover ring-1 ring-teal"
+                  className="w-6 h-6 rounded-full object-cover ring-1 ring-teal/40"
                 />
-                <div className="hidden xl:flex flex-col text-left">
-                  <span className="text-xs font-bold text-white truncate max-w-[120px]">
-                    {currentUser.fullName}
-                  </span>
-                  <span className="text-[10px] text-slate-300 capitalize font-medium">
-                    {getRoleLabel()}
-                  </span>
-                </div>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                <span className="hidden md:inline text-[11px] font-medium text-slate-200 max-w-[100px] truncate">
+                  {currentUser.fullName}
+                </span>
+                <ChevronDown className="w-3 h-3 text-slate-400" />
               </button>
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 py-2 z-50">
-                  <div className="px-4 py-2 border-b border-slate-100">
-                    <div className="text-xs font-bold text-navy">{currentUser.fullName}</div>
-                    <div className="text-[11px] text-slate-500">{currentUser.email}</div>
-                    <div className={`mt-1.5 inline-block px-2 py-0.5 rounded text-[10px] font-bold ${getRoleColor()}`}>
-                      {getRoleLabel()}
-                    </div>
+                <div className="absolute right-0 mt-2 w-64 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-in fade-in">
+                  <div className="bg-slate-50 p-3 border-b border-slate-100">
+                    <div className="font-bold text-xs text-navy">{currentUser.fullName}</div>
+                    <div className="text-[10px] text-slate-500 font-mono">{currentUser.email}</div>
                   </div>
 
-                  <div className="px-2 py-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    Ganti Persona Cepat
+                  <div className="p-2 space-y-1 text-xs">
+                    <span className="px-2 py-1 text-[10px] font-mono text-slate-400 block uppercase">
+                      Ganti Akun Demo (1-Klik):
+                    </span>
+                    {[
+                      { id: "user-nelayan-anto", label: "Nelayan Anto", role: "fisherman" },
+                      { id: "user-operator-budi", label: "Operator Budi", role: "operator" },
+                      { id: "user-buyer-citra", label: "Buyer PT Laut", role: "buyer" },
+                      { id: "user-gov-hendra", label: "Pemerintah / CSR", role: "gov" },
+                      { id: "user-admin-global", label: "Admin Global", role: "admin" },
+                    ].map((user) => (
+                      <button
+                        key={user.id}
+                        onClick={() => {
+                          switchUser(user.id);
+                          setUserMenuOpen(false);
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded-lg transition flex items-center justify-between text-xs ${
+                          currentUser.role === user.role
+                            ? "bg-teal-50 text-teal font-bold"
+                            : "hover:bg-slate-100 text-slate-700"
+                        }`}
+                      >
+                        <span>{user.label}</span>
+                        {currentUser.role === user.role && <CheckCircle2 className="w-3.5 h-3.5 text-teal" />}
+                      </button>
+                    ))}
                   </div>
 
-                  <button
-                    onClick={() => {
-                      switchUser("user-nelayan-anto");
-                      setUserMenuOpen(false);
-                      router.push("/dashboard");
-                    }}
-                    className="w-full text-left px-3 py-2 text-xs hover:bg-slate-100 flex items-center justify-between text-slate-700"
-                  >
-                    <span>1. Nelayan Anto (Muara Baru)</span>
-                    {currentUser.role === "fisherman" && <CheckCircle2 className="w-4 h-4 text-teal" />}
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      switchUser("user-operator-budi");
-                      setUserMenuOpen(false);
-                      router.push("/operator");
-                    }}
-                    className="w-full text-left px-3 py-2 text-xs hover:bg-slate-100 flex items-center justify-between text-slate-700"
-                  >
-                    <span>2. Operator Budi (BUMDes)</span>
-                    {currentUser.role === "operator" && <CheckCircle2 className="w-4 h-4 text-ocean" />}
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      switchUser("user-buyer-citra");
-                      setUserMenuOpen(false);
-                      router.push("/market");
-                    }}
-                    className="w-full text-left px-3 py-2 text-xs hover:bg-slate-100 flex items-center justify-between text-slate-700"
-                  >
-                    <span>3. Buyer PT Laut Nusantara</span>
-                    {currentUser.role === "buyer" && <CheckCircle2 className="w-4 h-4 text-orange" />}
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      switchUser("user-gov-hendra");
-                      setUserMenuOpen(false);
-                      router.push("/gov");
-                    }}
-                    className="w-full text-left px-3 py-2 text-xs hover:bg-slate-100 flex items-center justify-between text-slate-700"
-                  >
-                    <span>4. Pemerintah KKP / CSR</span>
-                    {currentUser.role === "gov" && <CheckCircle2 className="w-4 h-4 text-green" />}
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      switchUser("user-admin-global");
-                      setUserMenuOpen(false);
-                      router.push("/admin");
-                    }}
-                    className="w-full text-left px-3 py-2 text-xs hover:bg-slate-100 flex items-center justify-between text-slate-700"
-                  >
-                    <span>5. Admin Master Global</span>
-                    {currentUser.role === "admin" && <CheckCircle2 className="w-4 h-4 text-purple-700" />}
-                  </button>
-
-                  <div className="border-t border-slate-100 mt-2 pt-1 px-2">
-                    <Link
-                      href="/login"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="w-full text-left px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded flex items-center gap-2 font-medium"
+                  <div className="p-2 border-t border-slate-100">
+                    <button
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        router.push(getDashboardHref());
+                      }}
+                      className="w-full bg-navy hover:bg-navy-800 text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1.5 transition"
                     >
-                      <LogOut className="w-3.5 h-3.5" />
-                      <span>Halaman Login / Ganti Akun</span>
-                    </Link>
+                      <LayoutDashboard className="w-3.5 h-3.5" />
+                      <span>Masuk ke Dashboard</span>
+                    </button>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-navy-800"
+              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white transition"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Dropdown Nav */}
+      {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-navy-900 border-t border-navy-800 px-4 pt-2 pb-4 space-y-1">
-          <Link
-            href={getDashboardHref()}
-            onClick={() => setMobileMenuOpen(false)}
-            className="block w-full bg-teal text-white text-center py-2 rounded-lg font-bold text-xs mb-2"
-          >
-            Masuk Portal {getRoleLabel()}
-          </Link>
+        <div className="lg:hidden bg-[#081524] border-t border-slate-800 px-4 py-3 space-y-1 animate-in slide-in-from-top-2">
           {publicLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className={`block px-3 py-2 rounded-md text-xs font-medium ${
-                pathname === link.href ? "bg-navy-800 text-teal-light font-bold" : "text-slate-300 hover:text-white"
-              }`}
+              className="block px-3 py-2 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-white/5 transition"
             >
               {link.label}
             </Link>
           ))}
-          <div className="pt-2 border-t border-navy-800 flex justify-between text-[11px] text-slate-400">
-            <span>Aktif: {currentUser.fullName}</span>
-            <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="text-teal">
-              Ganti Akun
+          <div className="pt-2 border-t border-slate-800 flex gap-2">
+            <Link
+              href={getDashboardHref()}
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex-1 bg-teal text-white text-center py-2 rounded-lg text-xs font-bold"
+            >
+              Buka Dashboard ({getRoleLabel()})
             </Link>
           </div>
         </div>
