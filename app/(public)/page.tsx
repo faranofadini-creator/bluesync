@@ -93,10 +93,110 @@ export default function HomePage() {
 
   return (
     <div className="space-y-16 sm:space-y-24">
-      {/* 1. HERO SECTION (PRD Section 2.2 - Slim & Minimalist) */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#081524] via-[#09182a] to-[#0a1f33] text-white pt-10 pb-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
-        {/* Subtle Ambient Glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-teal/15 blur-[100px] rounded-full pointer-events-none" />
+      {/* 1. HERO SECTION (PRD Section 2.2 - Slim, Minimalist with Grand Maritime Solar Banner) */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#06121f] via-[#08182b] to-[#0a2038] text-white pt-10 pb-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
+        {/* GRAND MARITIME & SOLAR BACKDROP BANNER (Low Opacity ~15%) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
+          {/* Subtle Ambient Radial Glows */}
+          <div className="absolute top-10 right-1/4 w-[600px] h-[400px] bg-teal/15 blur-[120px] rounded-full" />
+          <div className="absolute top-0 right-10 w-[400px] h-[400px] bg-amber-500/10 blur-[140px] rounded-full" />
+
+          {/* Grand Vector Illustration of Nusantara Coastal Cold Chain & Solar Fleet */}
+          <svg
+            viewBox="0 0 1440 600"
+            preserveAspectRatio="xMidYMid slice"
+            className="w-full h-full opacity-18 mix-blend-screen"
+          >
+            <defs>
+              <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#0D9488" stopOpacity="0.4" />
+                <stop offset="50%" stopColor="#0284c7" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#0D9488" stopOpacity="0.3" />
+              </linearGradient>
+              <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#0f766e" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#1e3a8a" stopOpacity="0.6" />
+              </linearGradient>
+              <linearGradient id="sunRays" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#fbbf24" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+
+            {/* Rising Solar Sun & Subtle Rays */}
+            <circle cx="1150" cy="120" r="140" fill="url(#sunRays)" />
+            <circle cx="1150" cy="120" r="60" fill="#f59e0b" fillOpacity="0.25" />
+
+            {/* Distant Coastal Islands Silhouette */}
+            <path
+              d="M0,380 Q180,330 360,370 T720,350 T1080,360 T1440,340 L1440,600 L0,600 Z"
+              fill="#062137"
+              opacity="0.7"
+            />
+            <path
+              d="M0,420 Q240,380 480,410 T960,390 T1440,410 L1440,600 L0,600 Z"
+              fill="#041829"
+              opacity="0.85"
+            />
+
+            {/* Traditional Fishing Boats (Perahu Nelayan Nusantara) */}
+            {/* Boat 1 - Left */}
+            <g transform="translate(180, 360) scale(0.65)">
+              <path d="M10,40 Q50,45 90,40 Q80,60 50,60 Q20,60 10,40 Z" fill="#0D9488" opacity="0.8" />
+              <line x1="50" y1="40" x2="50" y2="10" stroke="#38bdf8" strokeWidth="2" />
+              <polygon points="50,12 85,25 50,38" fill="#38bdf8" opacity="0.5" />
+            </g>
+
+            {/* Boat 2 - Middle Coast */}
+            <g transform="translate(680, 340) scale(0.8)">
+              <path d="M10,40 Q60,45 110,40 Q100,60 60,60 Q20,60 10,40 Z" fill="#14b8a6" opacity="0.7" />
+              <line x1="60" y1="40" x2="60" y2="5" stroke="#7dd3fc" strokeWidth="2.5" />
+              <polygon points="60,8 100,22 60,36" fill="#7dd3fc" opacity="0.6" />
+            </g>
+
+            {/* Boat 3 - Right */}
+            <g transform="translate(1220, 320) scale(0.55)">
+              <path d="M10,40 Q50,45 90,40 Q80,60 50,60 Q20,60 10,40 Z" fill="#0D9488" opacity="0.7" />
+              <line x1="50" y1="40" x2="50" y2="10" stroke="#38bdf8" strokeWidth="2" />
+              <polygon points="50,12 85,25 50,38" fill="#38bdf8" opacity="0.5" />
+            </g>
+
+            {/* Micro Cold Storage & Solar Arrays on Coastline (Right Side) */}
+            <g transform="translate(980, 240) scale(0.85)">
+              {/* Solar Canopy Panels */}
+              <polygon points="40,60 220,40 250,90 70,110" fill="#1e3a8a" stroke="#60a5fa" strokeWidth="1.5" opacity="0.7" />
+              <line x1="100" y1="55" x2="130" y2="103" stroke="#93c5fd" strokeWidth="1" opacity="0.6" />
+              <line x1="160" y1="48" x2="190" y2="97" stroke="#93c5fd" strokeWidth="1" opacity="0.6" />
+              {/* Cold Storage Container Cabin */}
+              <rect x="70" y="105" width="160" height="90" rx="4" fill="#0f2f3d" stroke="#0D9488" strokeWidth="2" opacity="0.8" />
+              {/* Cold Glow Indicator */}
+              <circle cx="150" cy="145" r="18" fill="#38bdf8" opacity="0.3" />
+            </g>
+
+            {/* Digital IoT Circuit Constellation Telemetry Lines */}
+            <g stroke="#0D9488" strokeWidth="1" strokeDasharray="3 3" opacity="0.5">
+              <line x1="210" y1="380" x2="450" y2="310" />
+              <line x1="450" y1="310" x2="720" y2="350" />
+              <line x1="720" y1="350" x2="1050" y2="290" />
+              <line x1="1050" y1="290" x2="1150" y2="120" />
+            </g>
+
+            {/* Pulsing Nodes */}
+            <circle cx="450" cy="310" r="4" fill="#14b8a6" />
+            <circle cx="720" cy="350" r="4" fill="#14b8a6" />
+            <circle cx="1050" cy="290" r="5" fill="#38bdf8" />
+
+            {/* Foreground Rolling Ocean Waves */}
+            <path
+              d="M0,490 C320,440 420,530 720,480 C1020,430 1180,520 1440,470 L1440,600 L0,600 Z"
+              fill="url(#waveGrad1)"
+            />
+            <path
+              d="M0,530 C360,490 600,560 900,510 C1200,460 1320,540 1440,510 L1440,600 L0,600 Z"
+              fill="url(#waveGrad2)"
+            />
+          </svg>
+        </div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
