@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useBlueSyncStore } from "@/lib/store/bluesync-store";
 import { Presentation, CheckCircle2, ArrowRight, ArrowLeft, X, Sparkles, AlertTriangle } from "lucide-react";
 
@@ -103,7 +103,21 @@ export default function PitchFlowHelper() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const router = useRouter();
+  const pathname = usePathname();
   const { switchUser, injectTemperatureAnomaly } = useBlueSyncStore();
+
+  // Hide pitch flow widget on clean public pages (homepage, market, solutions, etc.)
+  // Only display when inside login, admin demo, or dashboard routes
+  const isDemoOrDashboard =
+    pathname === "/login" ||
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/operator") ||
+    pathname.startsWith("/gov");
+
+  if (!isDemoOrDashboard) {
+    return null;
+  }
 
   const step = PITCH_STEPS[currentStepIndex];
 

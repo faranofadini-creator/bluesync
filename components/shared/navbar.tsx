@@ -11,9 +11,9 @@ import {
   ChevronDown,
   Menu,
   X,
-  Sparkles,
+  UserCheck,
+  LogIn,
   CheckCircle2,
-  AlertTriangle,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -27,6 +27,13 @@ export default function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
+
+  // Determine if we are on an internal dashboard route
+  const isDashboardRoute =
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/operator") ||
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/gov");
 
   const publicLinks = [
     { href: "/", label: "Beranda" },
@@ -74,7 +81,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 bg-[#081524]/90 backdrop-blur-md text-white border-b border-slate-800/80 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
-          {/* Brand Logo - Slim & Minimalist */}
+          {/* Brand Logo - Slim & Clean */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform bg-white/10 border border-white/20">
@@ -96,7 +103,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Public Navigation - Slim Pills */}
+          {/* Desktop Public Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
             {publicLinks.map((link) => (
               <Link
@@ -113,162 +120,173 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right Actions: Slim Role Portal, Notification Bell & User Switcher */}
+          {/* Right Actions */}
           <div className="flex items-center gap-2">
-            {/* Quick Link to Current Role Dashboard */}
-            <Link
-              href={getDashboardHref()}
-              className="hidden sm:flex items-center gap-1.5 bg-teal/90 hover:bg-teal text-white px-3 py-1 rounded-lg text-xs font-semibold transition shadow-sm"
-            >
-              <LayoutDashboard className="w-3.5 h-3.5" />
-              <span>Portal {getRoleLabel()}</span>
-            </Link>
-
-            {/* Notification Bell */}
-            <div className="relative">
-              <button
-                onClick={() => setNotifOpen(!notifOpen)}
-                className="relative p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition"
-                aria-label="Notifikasi"
+            {/* If on Public routes and NOT inside dashboard: Show dedicated "Masuk / Akun Demo" Button */}
+            {!isDashboardRoute ? (
+              <Link
+                href="/login"
+                className="bg-teal hover:bg-teal-dark text-white px-3.5 py-1.5 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1.5 hover:scale-105"
               >
-                <Bell className="w-4 h-4" />
-                {unreadCount > 0 && (
-                  <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full text-[9px] font-bold flex items-center justify-center text-white ring-2 ring-slate-900 animate-pulse">
-                    {unreadCount}
-                  </span>
-                )}
-              </button>
+                <UserCheck className="w-3.5 h-3.5" />
+                <span>Masuk / Akun Demo</span>
+              </Link>
+            ) : (
+              /* If inside dashboard: Show role badge and notification + persona switcher */
+              <>
+                <Link
+                  href={getDashboardHref()}
+                  className="hidden sm:flex items-center gap-1.5 bg-teal/90 hover:bg-teal text-white px-3 py-1 rounded-lg text-xs font-semibold transition shadow-sm"
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  <span>Portal {getRoleLabel()}</span>
+                </Link>
 
-              {/* Notification Drawer Dropdown */}
-              {notifOpen && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-in fade-in">
-                  <div className="bg-[#081524] text-white px-4 py-2.5 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Bell className="w-3.5 h-3.5 text-teal" />
-                      <span className="font-bold text-xs">Pusat Notifikasi & Telemetri</span>
-                    </div>
-                    {notifications.length > 0 && (
-                      <button
-                        onClick={clearNotifications}
-                        className="text-[10px] text-slate-400 hover:text-white underline"
-                      >
-                        Bersihkan
-                      </button>
+                {/* Notification Bell */}
+                <div className="relative">
+                  <button
+                    onClick={() => setNotifOpen(!notifOpen)}
+                    className="relative p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition"
+                    aria-label="Notifikasi"
+                  >
+                    <Bell className="w-4 h-4" />
+                    {unreadCount > 0 && (
+                      <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full text-[9px] font-bold flex items-center justify-center text-white ring-2 ring-slate-900 animate-pulse">
+                        {unreadCount}
+                      </span>
                     )}
-                  </div>
+                  </button>
 
-                  <div className="max-h-80 overflow-y-auto divide-y divide-slate-100">
-                    {notifications.length === 0 ? (
-                      <div className="p-6 text-center text-xs text-slate-400">
-                        Tidak ada notifikasi baru. Sistem beroperasi normal.
+                  {/* Notification Drawer Dropdown */}
+                  {notifOpen && (
+                    <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-in fade-in">
+                      <div className="bg-[#081524] text-white px-4 py-2.5 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Bell className="w-3.5 h-3.5 text-teal" />
+                          <span className="font-bold text-xs">Pusat Notifikasi & Telemetri</span>
+                        </div>
+                        {notifications.length > 0 && (
+                          <button
+                            onClick={clearNotifications}
+                            className="text-[10px] text-slate-400 hover:text-white underline"
+                          >
+                            Bersihkan
+                          </button>
+                        )}
                       </div>
-                    ) : (
-                      notifications.slice(0, 8).map((notif) => (
-                        <div
-                          key={notif.id}
-                          onClick={() => markNotificationRead(notif.id)}
-                          className={`p-3.5 hover:bg-slate-50 transition cursor-pointer text-xs space-y-1 ${
-                            !notif.isRead ? "bg-teal-50/50" : ""
-                          }`}
-                        >
-                          <div className="flex justify-between items-start">
-                            <span
-                              className={`font-semibold ${
-                                notif.severity === "critical"
-                                  ? "text-red-600"
-                                  : notif.severity === "warning"
-                                  ? "text-amber-600"
-                                  : "text-navy"
+
+                      <div className="max-h-80 overflow-y-auto divide-y divide-slate-100">
+                        {notifications.length === 0 ? (
+                          <div className="p-6 text-center text-xs text-slate-400">
+                            Tidak ada notifikasi baru. Sistem beroperasi normal.
+                          </div>
+                        ) : (
+                          notifications.slice(0, 8).map((notif) => (
+                            <div
+                              key={notif.id}
+                              onClick={() => markNotificationRead(notif.id)}
+                              className={`p-3.5 hover:bg-slate-50 transition cursor-pointer text-xs space-y-1 ${
+                                !notif.isRead ? "bg-teal-50/50" : ""
                               }`}
                             >
-                              {notif.title}
-                            </span>
-                            <span className="text-[10px] text-slate-400 font-mono">
-                              {new Date(notif.createdAt).toLocaleTimeString("id-ID", {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-slate-600 leading-relaxed">
-                            {notif.body}
-                          </p>
-                        </div>
-                      ))
-                    )}
-                  </div>
+                              <div className="flex justify-between items-start">
+                                <span
+                                  className={`font-semibold ${
+                                    notif.severity === "critical"
+                                      ? "text-red-600"
+                                      : notif.severity === "warning"
+                                      ? "text-amber-600"
+                                      : "text-navy"
+                                  }`}
+                                >
+                                  {notif.title}
+                                </span>
+                                <span className="text-[10px] text-slate-400 font-mono">
+                                  {new Date(notif.createdAt).toLocaleTimeString("id-ID", {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-slate-600 leading-relaxed">
+                                {notif.body}
+                              </p>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
 
-            {/* Persona Switcher Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-1.5 p-1 sm:px-2 rounded-lg hover:bg-white/5 transition text-left border border-white/10"
-              >
-                <img
-                  src={currentUser.avatarUrl}
-                  alt={currentUser.fullName}
-                  className="w-6 h-6 rounded-full object-cover ring-1 ring-teal/40"
-                />
-                <span className="hidden md:inline text-[11px] font-medium text-slate-200 max-w-[100px] truncate">
-                  {currentUser.fullName}
-                </span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
-              </button>
-
-              {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-in fade-in">
-                  <div className="bg-slate-50 p-3 border-b border-slate-100">
-                    <div className="font-bold text-xs text-navy">{currentUser.fullName}</div>
-                    <div className="text-[10px] text-slate-500 font-mono">{currentUser.email}</div>
-                  </div>
-
-                  <div className="p-2 space-y-1 text-xs">
-                    <span className="px-2 py-1 text-[10px] font-mono text-slate-400 block uppercase">
-                      Ganti Akun Demo (1-Klik):
+                {/* Persona Switcher Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="flex items-center gap-1.5 p-1 sm:px-2 rounded-lg hover:bg-white/5 transition text-left border border-white/10"
+                  >
+                    <img
+                      src={currentUser.avatarUrl}
+                      alt={currentUser.fullName}
+                      className="w-6 h-6 rounded-full object-cover ring-1 ring-teal/40"
+                    />
+                    <span className="hidden md:inline text-[11px] font-medium text-slate-200 max-w-[100px] truncate">
+                      {currentUser.fullName}
                     </span>
-                    {[
-                      { id: "user-nelayan-anto", label: "Nelayan Anto", role: "fisherman" },
-                      { id: "user-operator-budi", label: "Operator Budi", role: "operator" },
-                      { id: "user-buyer-citra", label: "Buyer PT Laut", role: "buyer" },
-                      { id: "user-gov-hendra", label: "Pemerintah / CSR", role: "gov" },
-                      { id: "user-admin-global", label: "Admin Global", role: "admin" },
-                    ].map((user) => (
-                      <button
-                        key={user.id}
-                        onClick={() => {
-                          switchUser(user.id);
-                          setUserMenuOpen(false);
-                        }}
-                        className={`w-full text-left px-2.5 py-1.5 rounded-lg transition flex items-center justify-between text-xs ${
-                          currentUser.role === user.role
-                            ? "bg-teal-50 text-teal font-bold"
-                            : "hover:bg-slate-100 text-slate-700"
-                        }`}
-                      >
-                        <span>{user.label}</span>
-                        {currentUser.role === user.role && <CheckCircle2 className="w-3.5 h-3.5 text-teal" />}
-                      </button>
-                    ))}
-                  </div>
+                    <ChevronDown className="w-3 h-3 text-slate-400" />
+                  </button>
 
-                  <div className="p-2 border-t border-slate-100">
-                    <button
-                      onClick={() => {
-                        setUserMenuOpen(false);
-                        router.push(getDashboardHref());
-                      }}
-                      className="w-full bg-navy hover:bg-navy-800 text-white font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1.5 transition"
-                    >
-                      <LayoutDashboard className="w-3.5 h-3.5" />
-                      <span>Masuk ke Dashboard</span>
-                    </button>
-                  </div>
+                  {userMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-64 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-in fade-in">
+                      <div className="bg-slate-50 p-3 border-b border-slate-100">
+                        <div className="font-bold text-xs text-navy">{currentUser.fullName}</div>
+                        <div className="text-[10px] text-slate-500 font-mono">{currentUser.email}</div>
+                      </div>
+
+                      <div className="p-2 space-y-1 text-xs">
+                        <span className="px-2 py-1 text-[10px] font-mono text-slate-400 block uppercase">
+                          Ganti Akun Demo (1-Klik):
+                        </span>
+                        {[
+                          { id: "user-nelayan-anto", label: "Nelayan Anto", role: "fisherman" },
+                          { id: "user-operator-budi", label: "Operator Budi", role: "operator" },
+                          { id: "user-buyer-citra", label: "Buyer PT Laut", role: "buyer" },
+                          { id: "user-gov-hendra", label: "Pemerintah / CSR", role: "gov" },
+                          { id: "user-admin-global", label: "Admin Global", role: "admin" },
+                        ].map((user) => (
+                          <button
+                            key={user.id}
+                            onClick={() => {
+                              switchUser(user.id);
+                              setUserMenuOpen(false);
+                            }}
+                            className={`w-full text-left px-2.5 py-1.5 rounded-lg transition flex items-center justify-between text-xs ${
+                              currentUser.role === user.role
+                                ? "bg-teal-50 text-teal font-bold"
+                                : "hover:bg-slate-100 text-slate-700"
+                            }`}
+                          >
+                            <span>{user.label}</span>
+                            {currentUser.role === user.role && <CheckCircle2 className="w-3.5 h-3.5 text-teal" />}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="p-2 border-t border-slate-100">
+                        <Link
+                          href="/"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-1.5 rounded-lg text-xs flex items-center justify-center gap-1.5 transition"
+                        >
+                          <LogOut className="w-3.5 h-3.5" />
+                          <span>Keluar ke Halaman Publik</span>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              </>
+            )}
 
             {/* Mobile Hamburger Toggle */}
             <button
@@ -295,13 +313,13 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <div className="pt-2 border-t border-slate-800 flex gap-2">
+          <div className="pt-2 border-t border-slate-800">
             <Link
-              href={getDashboardHref()}
+              href="/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex-1 bg-teal text-white text-center py-2 rounded-lg text-xs font-bold"
+              className="block w-full bg-teal text-white text-center py-2 rounded-lg text-xs font-bold"
             >
-              Buka Dashboard ({getRoleLabel()})
+              Masuk / Akun Demo
             </Link>
           </div>
         </div>
