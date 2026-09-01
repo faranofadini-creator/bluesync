@@ -81,10 +81,10 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 bg-[#081524]/90 backdrop-blur-md text-white border-b border-slate-800/80 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
-          {/* Brand Logo - Slim & Clean */}
+          {/* Brand Logo - Slim, Prestigious & Glowing */}
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center p-0.5 group-hover:scale-105 transition-transform bg-white/10 border border-white/20">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="w-9 h-9 rounded-xl overflow-hidden flex items-center justify-center p-1 group-hover:scale-105 transition-all bg-white shadow-md border border-teal/40 group-hover:border-teal">
                 <img
                   src="/bluesync-logo.png"
                   alt="Logo BlueSync"
@@ -92,15 +92,20 @@ export default function Navbar() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-base tracking-tight text-white flex items-center">
+                <span className="font-extrabold text-base tracking-tight text-white flex items-center">
                   BLUESYNC
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal ml-0.5 inline-block" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal ml-0.5 inline-block animate-pulse" />
                 </span>
                 <span className="text-[8px] uppercase tracking-widest text-teal-light -mt-1 font-mono font-medium">
                   Solar Cold Chain
                 </span>
               </div>
             </Link>
+
+            <span className="hidden xl:inline-flex items-center gap-1 ml-1 bg-slate-900 border border-teal/30 text-teal-light px-2 py-0.5 rounded-full text-[9px] font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal animate-ping" />
+              Universitas Airlangga
+            </span>
           </div>
 
           {/* Desktop Public Navigation */}

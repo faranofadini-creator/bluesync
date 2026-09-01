@@ -8,6 +8,7 @@ import SimplifiedWorkflow from "@/components/home/simplified-workflow";
 import LogoPhilosophyModal from "@/components/home/logo-philosophy-modal";
 import ProductMockupDiagram from "@/components/home/product-mockup-diagram";
 import BmcRevenueChart from "@/components/home/bmc-revenue-chart";
+import CredibilitySection from "@/components/home/credibility-section";
 import { formatRupiah } from "@/lib/utils";
 import {
   Sun,
@@ -202,22 +203,25 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Col: Hero Headline & CTAs */}
             <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
-              {/* Badge with Logo Trigger */}
-              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2">
+              {/* Badge with Logo Trigger & Motion Glow */}
+              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
                 <button
                   onClick={() => setIsLogoModalOpen(true)}
-                  className="bg-slate-900/90 border border-teal/40 hover:border-teal text-teal-light px-3 py-1 rounded-full text-xs font-semibold shadow-inner flex items-center gap-2 transition hover:scale-105"
+                  className="bg-slate-900/90 border border-teal/50 hover:border-teal text-teal-light px-3.5 py-1.5 rounded-full text-xs font-semibold shadow-lg flex items-center gap-2.5 transition hover:scale-105 animate-pulse-glow"
                 >
-                  <img
-                    src="/bluesync-logo.png"
-                    alt="Logo BlueSync"
-                    className="w-3.5 h-3.5 rounded-full object-cover"
-                  />
+                  <div className="w-5 h-5 rounded-full bg-white p-0.5 overflow-hidden flex items-center justify-center shadow">
+                    <img
+                      src="/bluesync-logo.png"
+                      alt="Logo BlueSync"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
                   <span>Filosofi & Relevansi Logo</span>
-                  <Sparkles className="w-3 h-3 text-amber-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
                 </button>
 
-                <span className="hidden sm:inline-block bg-teal/10 text-teal-light text-[11px] font-mono px-3 py-0.5 rounded-full border border-teal/20">
+                <span className="hidden sm:inline-flex items-center gap-1.5 bg-teal/15 text-teal-light text-[11px] font-mono px-3 py-1 rounded-full border border-teal/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal animate-ping" />
                   Universitas Airlangga Innovation
                 </span>
               </div>
@@ -377,6 +381,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* CREDIBILITY, INSTITUTIONAL PARTNERS & PILOT TESTIMONIALS */}
+        <CredibilitySection />
 
         {/* 3. SOLUTION OVERVIEW SECTION (PRD Section 2.4 - 4 Modular Cards) */}
         <section id="solusi" className="space-y-6">
